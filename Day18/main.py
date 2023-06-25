@@ -35,6 +35,15 @@ def random_walk(steps: int):
         size += 1
         speed += 0.3
 
-random_walk(10)
+def spirograph(steps: int, radius: float):
+    for i in range(steps):
+        tim.pensize(3)
+        tim.speed(30)
+        color = get_random_color()
+        tim.pencolor((color[0], color[1], color[2]))
+        tim.circle(radius)
+        tim.right(360 / steps)
+
+spirograph(60, 100)
 
 screen.exitonclick()
