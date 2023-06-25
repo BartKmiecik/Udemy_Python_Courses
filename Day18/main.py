@@ -3,21 +3,38 @@ import random
 tim = Turtle()
 tim.shape("turtle")
 tim.color("red")
-
 screen = Screen()
+screen.colormode(255)
+
+def get_random_color():
+    r = random.randint(0, 255)
+    g = random.randint(0, 255)
+    b = random.randint(0, 255)
+    return r, g, b
 
 def draw_shape(corners: int):
-    r = random.randint(0, 256)
-    g = random.randint(0, 256)
-    b = random.randint(0, 256)
+    color = get_random_color()
     screen.colormode(255)
-    tim.pencolor((r, g, b))
+    tim.pencolor((color[0], color[1], color[2]))
     tim.pd()
     for i in range(corners):
         tim.forward(100)
         tim.right(360 / corners)
 
-for i in range(3, 11):
-    draw_shape(i)
+def random_walk(steps: int):
+    size = 4
+    speed = 4
+    for i in range(steps):
+        tim.pensize(size)
+        tim.speed(speed)
+        color = get_random_color()
+        tim.pencolor((color[0], color[1], color[2]))
+        rand = random.randint(0, 4)
+        tim.forward(100)
+        tim.right(90 * rand)
+        size += 1
+        speed += 0.3
+
+random_walk(10)
 
 screen.exitonclick()
