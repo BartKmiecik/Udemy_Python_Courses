@@ -11,6 +11,15 @@ class Snake():
             self.turtles.append(turtle)
         self.head = self.turtles[0]
 
+    def add_body(self):
+        turtle = Turtle()
+        turtle.pu()
+        turtle.shape('square')
+        temp = self.turtles[-1]
+        turtle.goto(temp.pos()[0], temp.pos()[1])
+        turtle.color('white')
+        self.turtles.append(turtle)
+
     def update(self):
         for t in range(len(self.turtles) - 1, 0, -1):
             pos = self.turtles[t - 1].pos()
