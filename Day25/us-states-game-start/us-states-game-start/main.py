@@ -14,9 +14,11 @@ turtle.pu()
 turtle.hideturtle()
 
 
-while True:
+while len(unique_states) > 0:
     i = len(data) - len(unique_states)
-    prompt = screen.textinput(f'States {i}/50', 'Give me name of the states')
+    prompt = screen.textinput(f'States {i}/50', 'Give me name of the states').title()
+    if(prompt == 'Exit'):
+        break
     if data['state'].unique().__contains__(prompt):
         if unique_states.__contains__(prompt):
             unique_states.remove(prompt)
@@ -25,4 +27,5 @@ while True:
             turtle.goto(x,y)
             turtle.write(prompt, False, 'center')
 
-screen.exitonclick()
+unique_states = pd.DataFrame({'state': unique_states})
+unique_states.to_csv('states_to_learn.csv', index=False)
