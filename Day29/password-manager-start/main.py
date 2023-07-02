@@ -1,13 +1,17 @@
 from tkinter import *
 from tkinter import messagebox
 from password_generator import Password_generator
+import pyperclip
 # ---------------------------- PASSWORD GENERATOR ------------------------------- #
 
 
 def pass_generate():
-    gnerator = Password_generator()
+    generator = Password_generator()
     pass_entry.delete(0, END)
-    pass_entry.insert(0, gnerator.get_password())
+    password = generator.get_password()
+    pass_entry.insert(0, password)
+    pyperclip.copy(password)
+    
 # ---------------------------- SAVE PASSWORD ------------------------------- #
 def add_fn():
     web = web_entry.get()
