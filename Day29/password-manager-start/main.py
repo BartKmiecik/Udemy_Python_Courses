@@ -11,7 +11,7 @@ def pass_generate():
     password = generator.get_password()
     pass_entry.insert(0, password)
     pyperclip.copy(password)
-    
+
 # ---------------------------- SAVE PASSWORD ------------------------------- #
 def add_fn():
     web = web_entry.get()
