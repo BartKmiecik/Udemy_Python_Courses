@@ -1,7 +1,31 @@
 from tkinter import *
+from tkinter import messagebox
+from password_generator import Password_generator
 # ---------------------------- PASSWORD GENERATOR ------------------------------- #
 
+
+def pass_generate():
+    gnerator = Password_generator()
+    pass_entry.delete(0, END)
+    pass_entry.insert(0, gnerator.get_password())
 # ---------------------------- SAVE PASSWORD ------------------------------- #
+def add_fn():
+    web = web_entry.get()
+    user = user_entry.get()
+    password = pass_entry.get()
+    if len(web) <= 0 or len(user) <= 0 or len(password) <= 0:
+        messagebox.showinfo('Warrning','You left some empty entries!')
+        print('Missing some filed!')
+        return
+
+    should_save = messagebox.askokcancel(title=web, message=f'Are you sure you want to save {password} to {user}?')
+    if should_save:
+        with open('passwords.txt', 'a') as file:
+            file.write(f'{web} | {user} | {password}\n')
+            print('Succesfully saved')
+            web_entry.delete(0, END)
+            pass_entry.delete(0, END)
+
 
 # ---------------------------- UI SETUP ------------------------------- #
 
@@ -25,24 +49,23 @@ password_label = Label(text='Password:')
 password_label.grid(column=0, row=3)
 
 web_entry = Entry(width=39)
+web_entry.focus()
 web_entry.grid(column=1,row=1, columnspan=2)
 
-user_entry = Entry(width=39, text='mypassword@phuck.com')
+user_entry = Entry(width=39)
+user_entry.insert(0,'mypassword@phuck.com')
 user_entry.grid(column=1, row=2, columnspan=2)
 
 pass_entry = Entry(width=21)
 pass_entry.grid(column=1, row=3)
 
-def pass_generate():
-    pass
+
 
 gen_pass_btn = Button(text='Generate Password' ,command=pass_generate)
 gen_pass_btn.grid(column=2, row=3)
 
-def add_fn():
-    pass
 
-add_btn = Button(text='Add', width=36)
-add_btn.grid(column=1, row=4)
+add_btn = Button(text='Add', width=36, command=add_fn)
+add_btn.grid(column=1, row=4,columnspan=2)
 
 window.mainloop()
