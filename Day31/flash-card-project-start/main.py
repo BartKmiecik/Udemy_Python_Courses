@@ -1,12 +1,28 @@
 from tkinter import *
+import pandas as pd
+import random
 BACKGROUND_COLOR = "#B1DDC6"
 #---------------------Logic----------------------------
+title_text = 'Language'
+word_text = 'word'
+
+data = pd.read_csv('data/french_words.csv')
 
 def right_answer():
-    pass
+    i = random.randint(0, len(data)-1)
+    title_text = 'French'
+    word_text = f'{data.iloc[i]["French"]}'
+    canvas.itemconfig(lang_canvas, text=title_text)
+    canvas.itemconfig(word_canvas, text=word_text)
+
 
 def wrong_answer():
-    pass
+    i = random.randint(0, len(data) - 1)
+    title_text = 'French'
+    word_text = f'{data.iloc[i]["French"]}'
+    canvas.itemconfig(lang_canvas, text=title_text)
+    canvas.itemconfig(word_canvas, text=word_text)
+
 
 #---------------------UI-------------------------------
 window = Tk()
@@ -19,6 +35,9 @@ image = PhotoImage(file='images/card_front.png')
 canvas.create_image(400, 270, image=image)
 canvas.config(bg=BACKGROUND_COLOR, highlightthickness=0, border=0)
 canvas.grid(column=1, row=1)
+lang_canvas = canvas.create_text(400,200, text= title_text, fill='black', font=('Arial', 24, 'bold'))
+word_canvas = canvas.create_text(400,270, text= word_text, fill='black', font=('Arial', 24, 'bold'))
+
 
 wrong_img = PhotoImage(file='images/wrong.png')
 wrong_button = Button(image=wrong_img, highlightthickness=0,borderwidth=0, command=wrong_answer)
