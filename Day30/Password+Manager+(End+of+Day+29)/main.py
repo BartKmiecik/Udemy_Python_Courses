@@ -84,10 +84,20 @@ email_entry.insert(0, "angela@gmail.com")
 password_entry = Entry(width=21)
 password_entry.grid(row=3, column=1)
 
+def search_fn():
+    with open("data.json", "r") as data_file:
+        data = json.load(data_file)
+        website_to_look = website_entry.get()
+        if website_to_look in data:
+            if data[website_to_look]["email"] == email_entry.get():
+                messagebox.showinfo(f'{website_to_look}', f'Password is: {data[website_to_look]["password"]}')
+
 # Buttons
 generate_password_button = Button(text="Generate Password", command=generate_password)
 generate_password_button.grid(row=3, column=2)
 add_button = Button(text="Add", width=36, command=save)
 add_button.grid(row=4, column=1, columnspan=2)
+search_btn = Button(text='Search', command=search_fn)
+search_btn.grid(row=1, column=2)
 
 window.mainloop()
