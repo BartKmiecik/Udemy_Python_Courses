@@ -7,10 +7,15 @@ BACKGROUND_COLOR = "#B1DDC6"
 title_text = 'Language'
 word_text = 'word'
 counter = 0
-data = pd.read_csv('data/french_words.csv')
+try:
+    data = pd.read_csv('french_words.csv')
+except FileNotFoundError:
+    data = pd.read_csv('data/french_words.csv')
 to_learn = data.to_dict(orient='records')
 def right_answer():
     to_learn.remove(to_learn[counter])
+    learn_df = pd.DataFrame(to_learn)
+    learn_df.to_csv('french_words.csv', index=False)
     next_word()
 
 
