@@ -4,6 +4,7 @@ from data2 import question_data
 from quiz_brain import QuizBrain
 import requests
 
+
 question_bank = []
 
 def get_new_questions():
