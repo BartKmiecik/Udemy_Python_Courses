@@ -1,4 +1,5 @@
 import requests
+from datetime import datetime as dt
 
 url = 'https://pixe.la/v1/users'
 username = 'bart32123'
@@ -27,5 +28,20 @@ graph_params = {
     'color': 'momiji'
 }
 
-request = requests.post(url=creating_graph, json=graph_params, headers=headers)
+# request = requests.post(url=creating_graph, json=graph_params, headers=headers)
+# print(request)
+
+post_pixel = f'{creating_graph}/graph1'
+
+now = dt.now()
+
+pixel_params ={
+    'date': now.strftime('%Y%m%d'),
+    'quantity': '9'
+}
+
+# print(pixel_params)
+
+
+request = requests.post(url=post_pixel, json=pixel_params, headers=headers)
 print(request)
