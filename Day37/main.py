@@ -42,6 +42,14 @@ pixel_params ={
 
 # print(pixel_params)
 
+update_pixel = f'{post_pixel}/{now.strftime("%Y%m%d")}'
 
-request = requests.post(url=post_pixel, json=pixel_params, headers=headers)
+update_params ={
+    'quantity': '19'
+}
+
+delete_pixel = f'{update_pixel}'
+
+request = requests.delete(url=delete_pixel, headers=headers)
 print(request)
+
