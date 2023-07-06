@@ -1,4 +1,5 @@
 import requests
+import datetime as dt
 
 nutrition_ID = '6c717fd6'
 nutrition_Key = '5d187cc5da6f15a008d8783466c3bc81'
@@ -12,26 +13,55 @@ header = {
     'x-app-key': nutrition_Key
 }
 
+sheety_get = 'https://api.sheety.co/e623837db3ef07fc2dd590b5fd4f0822/myWorkouts/sheet1'
+sheety_post = 'https://api.sheety.co/e623837db3ef07fc2dd590b5fd4f0822/myWorkouts/sheet1'
+sheety_put = 'https://api.sheety.co/e623837db3ef07fc2dd590b5fd4f0822/myWorkouts/sheet1/[Object ID]'
+
+# # request = requests.get(url=url, params=check_user)
+exercised = input('Tell me what did you do today?')
+
 parameters = {
-    'query': "I've been running for 30 min",
+    'query': exercised,
     'gender': 'male',
     'weight_kg': 75,
     'height_cm': 172,
     'age': 31
 }
 
-sheety_get = 'https://api.sheety.co/e623837db3ef07fc2dd590b5fd4f0822/myWorkouts/sheet1'
-sheety_post = 'https://api.sheety.co/e623837db3ef07fc2dd590b5fd4f0822/myWorkouts/sheet1'
-sheety_put = 'https://api.sheety.co/e623837db3ef07fc2dd590b5fd4f0822/myWorkouts/sheet1/[Object ID]'
-
-# # request = requests.get(url=url, params=check_user)
-#
-# request = requests.post(url=f'{url}{natural_exercise}', json=parameters, headers=header)
-# # print(request.text)
+request = requests.post(url=f'{url}{natural_exercise}', json=parameters, headers=header)
+exercises = request.json()['exercises']
+exercises_list = []
+for exercise in exercises:
+    exer = {'Exercise': exercise['user_input']}
+    dur = {'Duration': exercise['duration_min']}
+    cal = {'Calories': exercise['nf_calories']}
+    temp = (exer, dur, cal)
+    exercises_list.append(temp)
+    print(temp)
 # request = requests.get(url=f'{url}{check_exercise}', headers=header, params=check_user)
 # print(request.json())
+now = dt.datetime.now()
 
+exe_date = {'Date': now.strftime("%d%m%Y")}
+exe_time = {'Time': now.strftime("%H%M%S")}
 
-request = requests.get(url=sheety_get)
+body = {
+     'sheet1': {
+      'test': 'test'
+    }
+}
+
+request = requests.post(url=sheety_post, json=body)
 print(request.json())
+
+data = {
+    "sheet1": {
+        "a": "X",
+        "b": "Y",
+    }
+}
+
+response = requests.post(url=sheety_post, json=data)
+print("response.status_code =", response.status_code)
+print("response.text =", response.text)
 
