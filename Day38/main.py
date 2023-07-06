@@ -20,12 +20,18 @@ parameters = {
     'age': 31
 }
 
-# request = requests.get(url=url, params=check_user)
+sheety_get = 'https://api.sheety.co/e623837db3ef07fc2dd590b5fd4f0822/myWorkouts/sheet1'
+sheety_post = 'https://api.sheety.co/e623837db3ef07fc2dd590b5fd4f0822/myWorkouts/sheet1'
+sheety_put = 'https://api.sheety.co/e623837db3ef07fc2dd590b5fd4f0822/myWorkouts/sheet1/[Object ID]'
 
-request = requests.post(url=f'{url}{natural_exercise}', json=parameters, headers=header)
-print(request.text)
-request = requests.get(url=f'{url}{check_exercise}', headers=header, params=check_user)
-print(request.text)
+# # request = requests.get(url=url, params=check_user)
+#
+# request = requests.post(url=f'{url}{natural_exercise}', json=parameters, headers=header)
+# # print(request.text)
+# request = requests.get(url=f'{url}{check_exercise}', headers=header, params=check_user)
+# print(request.json())
 
 
+request = requests.get(url=sheety_get)
+print(request.json())
 
