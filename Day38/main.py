@@ -1,16 +1,23 @@
 import requests
 import datetime as dt
+import os
+import pprint
+
+# Get the list of user's
+# environment variables
 
 nutrition_ID = '6c717fd6'
+os.environ['nutrition_ID'] = '6c717fd6'
 nutrition_Key = '5d187cc5da6f15a008d8783466c3bc81'
+os.environ['nutrition_Key'] = '5d187cc5da6f15a008d8783466c3bc81'
 url = 'https://trackapi.nutritionix.com'
 check_user = '/v2/users/checkUsername/Bart321231'
 natural_exercise = '/v2/natural/exercise'
 check_exercise = '/v2/exercise/log/Bart321231'
 
 header = {
-    "x-app-id": nutrition_ID,
-    'x-app-key': nutrition_Key
+    "x-app-id": os.environ['nutrition_ID'],
+    'x-app-key': os.environ['nutrition_Key']
 }
 
 sheety_get = 'https://api.sheety.co/e623837db3ef07fc2dd590b5fd4f0822/myWorkouts/sheet1'
