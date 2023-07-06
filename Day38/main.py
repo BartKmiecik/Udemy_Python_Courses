@@ -30,6 +30,7 @@ parameters = {
 
 request = requests.post(url=f'{url}{natural_exercise}', json=parameters, headers=header)
 exercises = request.json()['exercises']
+print(exercises)
 exercises_list = []
 for exercise in exercises:
     exer = {'Exercise': exercise['user_input']}
@@ -37,31 +38,40 @@ for exercise in exercises:
     cal = {'Calories': exercise['nf_calories']}
     temp = (exer, dur, cal)
     exercises_list.append(temp)
-    print(temp)
+
 # request = requests.get(url=f'{url}{check_exercise}', headers=header, params=check_user)
 # print(request.json())
 now = dt.datetime.now()
 
-exe_date = {'Date': now.strftime("%d%m%Y")}
-exe_time = {'Time': now.strftime("%H%M%S")}
+exe_date = {'Date': now.strftime("%d/%m/%Y")}
+exe_time = {'Time': now.strftime("%H:%M:%S")}
+print(exercises_list[0][0]['Exercise'])
+print(exe_date)
 
-body = {
-     'sheet1': {
-      'test': 'test'
+
+for e in exercises_list:
+    body = {
+         'sheet1': {
+             'date': exe_date['Date'],
+             'time': exe_time['Time'],
+             'exercise': e[0]['Exercise'],
+             'duration': e[1]['Duration'],
+             'calories': e[2]['Calories'],
+        }
     }
-}
+    request = requests.post(url=f'{sheety_post}', json=body)
+    print(request.json())
 
-request = requests.post(url=sheety_post, json=body)
-print(request.json())
 
-data = {
-    "sheet1": {
-        "a": "X",
-        "b": "Y",
-    }
-}
-
-response = requests.post(url=sheety_post, json=data)
-print("response.status_code =", response.status_code)
-print("response.text =", response.text)
+#
+# data = {
+#     "sheet1": {
+#         "a": "X",
+#         "b": "Y",
+#     }
+# }
+#
+# response = requests.post(url=sheety_post, json=data)
+print("response.status_code =", request.status_code)
+# print("response.text =", request.text)
 
