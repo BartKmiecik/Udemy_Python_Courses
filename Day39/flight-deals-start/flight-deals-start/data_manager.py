@@ -15,5 +15,8 @@ class DataManager:
         self.request = requests.get(url=self.url, headers=self.headers)
         city_price = []
         for n in self.request.json()['sheet1']:
-            city_price.append({n['city']: n['lowestPrice']})
-        print(city_price)
+            combo = (n['city'], n['iataCode'], n['lowestPrice'])
+            city_price.append(combo)
+        # print(self.request.json()['sheet1'])
+        return city_price
+

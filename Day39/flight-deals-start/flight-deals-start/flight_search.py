@@ -40,9 +40,8 @@ class FlightSearch:
         request = requests.get(url=f'{self.url}/v2/search', params=pramas, headers=headers).json()
         country = request['data'][0]['countryTo']
         price = request['data'][0]['price']
-        print(country, price)
+        #print(country, price)
         return price
 
-
-search = FlightSearch()
-search.check_flight_price('city:DUS')
+# search = FlightSearch()
+# search.check_flight_price('QWE')
