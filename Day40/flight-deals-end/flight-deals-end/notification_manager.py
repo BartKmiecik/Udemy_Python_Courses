@@ -27,7 +27,7 @@ class NotificationManager:
         with smtplib.SMTP('smtp.gmail.com') as connection:
             connection.starttls()
             connection.login(email, password)
-            connection.sendmail(email, email, message)
+            connection.sendmail(email, email, message.encode('utf-8'))
             connection.quit()
 
 
