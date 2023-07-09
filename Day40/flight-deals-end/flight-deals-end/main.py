@@ -37,3 +37,5 @@ for destination in sheet_data:
             )
     except AttributeError:
         print('None type, missing some data')
+    except TypeError:
+        print('Some crap is going through google sheet, can\' figure out why :(')
