@@ -36,21 +36,30 @@ class FlightSearch:
             headers=headers,
             params=query,
         )
-
+        data = None
         try:
             data = response.json()["data"][0]
         except IndexError:
             print(f"No flights found for {destination_city_code}.")
             return None
+        except KeyError:
+            print(f'Corrupted date file')
 
-        flight_data = FlightData(
-            price=data["price"],
-            origin_city=data["route"][0]["cityFrom"],
-            origin_airport=data["route"][0]["flyFrom"],
-            destination_city=data["route"][0]["cityTo"],
-            destination_airport=data["route"][0]["flyTo"],
-            out_date=data["route"][0]["local_departure"].split("T")[0],
-            return_date=data["route"][1]["local_departure"].split("T")[0]
-        )
-        print(f"{flight_data.destination_city}: £{flight_data.price}")
+        flight_data = None
+        try:
+            flight_data = FlightData(
+                price=data["price"],
+                origin_city=data["route"][0]["cityFrom"],
+                origin_airport=data["route"][0]["flyFrom"],
+                destination_city=data["route"][0]["cityTo"],
+                destination_airport=data["route"][0]["flyTo"],
+                out_date=data["route"][0]["local_departure"].split("T")[0],
+                return_date=data["route"][1]["local_departure"].split("T")[0]
+            )
+            print(f"{flight_data.destination_city}: £{flight_data.price}")
+        except UnboundLocalError:
+            print('File has no value')
+        except TypeError:
+            print('NonType object, missing some data')
+
         return flight_data
