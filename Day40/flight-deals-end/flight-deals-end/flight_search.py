@@ -35,6 +35,7 @@ class FlightSearch:
         query2 = copy.deepcopy(query)
         query2['max_stopovers'] = 2
         query2['stop_over'] = 1
+        query2['via_city'] = 'Shanghai'
 
         response = requests.get(
             url=f"{TEQUILA_ENDPOINT}/v2/search",
@@ -53,7 +54,7 @@ class FlightSearch:
 
             data = response.json()["data"][0]
         except IndexError:
-            print(f"No flights found for {destination_city_code}.")
+            print(f"No direct flights found for {destination_city_code}.")
             try:
                 data = response2.json()["data"][0]
             except IndexError:
@@ -62,15 +63,18 @@ class FlightSearch:
             print(f'Corrupted date file')
 
         flight_data = None
+
         try:
             flight_data = FlightData(
                 price=data["price"],
                 origin_city=data["route"][0]["cityFrom"],
                 origin_airport=data["route"][0]["flyFrom"],
-                destination_city=data["route"][0]["cityTo"],
-                destination_airport=data["route"][0]["flyTo"],
+                destination_city=data["route"][0]["cityTo"] if len(data['route']) < 3 else data["route"][1]["cityTo"],
+                destination_airport=data["route"][0]["flyTo"] if len(data['route']) < 3 else data["route"][1]["flyTo"],
                 out_date=data["route"][0]["local_departure"].split("T")[0],
-                return_date=data["route"][1]["local_departure"].split("T")[0]
+                return_date=data["route"][1]["local_departure"].split("T")[0],
+                stop_overs=0 if len(data['route']) < 3 else 1,
+                via_city="" if len(data['route']) < 3 else data["route"][0]["cityTo"]
             )
             print(f"{flight_data.destination_city}: £{flight_data.price}")
         except UnboundLocalError:

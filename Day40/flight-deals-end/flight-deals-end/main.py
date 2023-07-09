@@ -28,8 +28,12 @@ for destination in sheet_data:
     )
     try:
         if flight.price < destination["lowestPrice"]:
+            customer_message = f"Low price alert! Only £{flight.price} to fly from {flight.origin_city}-{flight.origin_airport} "\
+                        f"to {flight.destination_city}-{flight.destination_airport}, from {flight.out_date} to {flight.return_date}."
+            if flight.stop_over > 0:
+                customer_message += f'\nFlight has {flight.stop_over} stop over, via {flight.via_city}'
             notification_manager.send_sms(
-                message=f"Low price alert! Only £{flight.price} to fly from {flight.origin_city}-{flight.origin_airport} to {flight.destination_city}-{flight.destination_airport}, from {flight.out_date} to {flight.return_date}."
+                message=customer_message
             )
     except AttributeError:
         print('None type, missing some data')
