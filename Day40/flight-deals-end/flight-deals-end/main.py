@@ -35,6 +35,7 @@ for destination in sheet_data:
             notification_manager.send_sms(
                 message=customer_message
             )
+            notification_manager.send_email(message=customer_message)
     except AttributeError:
         print('None type, missing some data')
     except TypeError:
