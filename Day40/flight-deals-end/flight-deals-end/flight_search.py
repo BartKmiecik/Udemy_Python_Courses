@@ -1,3 +1,4 @@
+import copy
 import requests
 from flight_data import FlightData
 
@@ -31,23 +32,32 @@ class FlightSearch:
             "curr": "GBP"
         }
 
+        query2 = copy.deepcopy(query)
+        query2['max_stopovers'] = 2
+        query2['stop_over'] = 1
+
         response = requests.get(
             url=f"{TEQUILA_ENDPOINT}/v2/search",
             headers=headers,
             params=query,
         )
+
+        response2 =  requests.get(
+            url=f"{TEQUILA_ENDPOINT}/v2/search",
+            headers=headers,
+            params=query2,
+        )
+
         data = None
         try:
+
             data = response.json()["data"][0]
         except IndexError:
             print(f"No flights found for {destination_city_code}.")
             try:
-                query['max_stopovers'] = 1
-                data = response.json()["data"][0]
-                print(data)
+                data = response2.json()["data"][0]
             except IndexError:
                 print(f"No flights found for {destination_city_code}.")
-            return None
         except KeyError:
             print(f'Corrupted date file')
 
