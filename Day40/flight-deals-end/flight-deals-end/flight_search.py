@@ -41,6 +41,12 @@ class FlightSearch:
             data = response.json()["data"][0]
         except IndexError:
             print(f"No flights found for {destination_city_code}.")
+            try:
+                query['max_stopovers'] = 1
+                data = response.json()["data"][0]
+                print(data)
+            except IndexError:
+                print(f"No flights found for {destination_city_code}.")
             return None
         except KeyError:
             print(f'Corrupted date file')
