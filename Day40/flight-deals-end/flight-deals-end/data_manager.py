@@ -1,9 +1,10 @@
 from pprint import pprint
 import requests
+import os
 
-SHEETY_PRICES_ENDPOINT = YOUR SHEETY PRICES ENDPOINT
-
-
+os.environ['sheety_url'] = 'https://api.sheety.co/e623837db3ef07fc2dd590b5fd4f0822/flightDeals/sheet1'
+os.environ['sheety_author'] = 'Bearer secret'
+SHEETY_PRICES_ENDPOINT = os.environ['sheety_url']
 class DataManager:
 
     def __init__(self):
